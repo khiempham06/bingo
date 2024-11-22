@@ -43,10 +43,13 @@ bool Matrix::select(int _n)
 
 bool Matrix::win() const
 {
+
     int res = 0;
+    bool fl{1};
+
     for(int i = 1; i <= n; i++)
     {
-        bool fl{1};
+        fl = 1;
         for(int j = 1; j <= n; j++)
         {
             if(grid[i][j])
@@ -61,7 +64,7 @@ bool Matrix::win() const
 
     for(int i = 1; i <= n; i++)
     {
-        bool fl{1};
+        fl = 1;
         for(int j = 1; j <= n; j++)
         {
             if(grid[j][i])
@@ -74,16 +77,24 @@ bool Matrix::win() const
             res++;
     }
 
+    fl = 1;
     for(int i = 1; i <= n; i++)
     {
-        if(!grid[i][i])
-            res++;
+        if(grid[i][i])
+            fl = 0;
     }
+    if(fl)
+        res++;
+
+    fl = 1;
     for(int i = 1, j = n; i <= n, j >= 1; i++, j--)
     {
-        if(!grid[i][j])
-            res++;
+        if(grid[i][j])
+            fl = 0;
     }
+
+    if(fl)
+        res++;
     return res >= n ? 1 : 0;
 }
 
@@ -142,6 +153,9 @@ Machine::pointw Machine::movee() const
     {
         for(int j = 1; j <= n; j++)
         {
+            /// 3 3
+            /// 3-0 3-1
+            /// 3 2
             pair<int, int> left{0, -1};
             pair<int, int> right{0, 1};
             pair<int, int> down{-1, 0};
@@ -262,6 +276,8 @@ void Bingo::play()
 
         cout << "Ma tran cua ban: " << endl;
         player.display();
+         cout << "Ma tran cua may: " << endl;
+        machine.display();
         cout << "----------------\n\n";
     }
 
